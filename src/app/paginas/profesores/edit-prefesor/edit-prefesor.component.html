@@ -1,1 +1,143 @@
-<p>edit-prefesor works!</p>
+<div class="wrapper">
+  <app-menu></app-menu>
+  <div class="main">
+    <app-header></app-header>
+    <main class="content">
+      <div class="container-fluid p-0">
+        <div class="edit-teacher">
+          <mat-card-header>
+            <mat-card-title>Editar Profesor</mat-card-title>
+          </mat-card-header>
+
+          <div class="updateBoreder">
+            <mat-card-content>
+              <form [formGroup]="editTeacherForm" (ngSubmit)="onSubmit()">
+
+                <!-- Información personal -->
+                <mat-accordion class="example-headers-align">
+                  <mat-expansion-panel [expanded]="step() === 0" (opened)="setStep(0)" hideToggle>
+                    <mat-expansion-panel-header>
+                      <mat-panel-title> Información personal </mat-panel-title>
+                      <mat-panel-description>
+                        Ver más...
+                        <mat-icon>account_circle</mat-icon>
+                      </mat-panel-description>
+                    </mat-expansion-panel-header>
+
+                    <mat-chip-set aria-label="Información del profesor">
+                      <mat-chip disabled>ID: {{ editTeacherForm.get('id')?.value }}</mat-chip>
+                    </mat-chip-set>
+
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Código del Profesor</mat-label>
+                      <input matInput formControlName="codTeacher" />
+                    </mat-form-field>
+
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Nombre del Profesor</mat-label>
+                      <input matInput formControlName="nameTeacher" />
+                    </mat-form-field>
+
+                    <p>
+                      <mat-slide-toggle formControlName="estado" color="primary">
+                        {{editTeacherForm.get('estado')?.value ? 'Activo' : 'Inactivo'}}
+                      </mat-slide-toggle>
+                    </p>
+
+                    <mat-action-row>
+                      <button mat-button (click)="nextStep()">Siguiente</button>
+                    </mat-action-row>
+                  </mat-expansion-panel>
+                </mat-accordion>
+
+                <!-- Cursos -->
+                <mat-expansion-panel [expanded]="step() === 1" (opened)="setStep(1)" hideToggle>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title> Cursos </mat-panel-title>
+                    <mat-panel-description>
+                      Ver más...
+                      <mat-icon>school</mat-icon>
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+
+                  <!-- Cursos asignados como Badges -->
+                  <div class="assigned-courses">
+                    <mat-label>Cursos asignados actuales</mat-label>
+                    <div class="chip-container">
+                      <mat-chip *ngFor="let course of editTeacherForm.get('courses')?.value">
+                        {{ course.nameCourse }}
+                      </mat-chip>
+                    </div>
+                  </div>
+
+                  <!-- Lista de cursos -->
+                  <mat-action-row>
+                    <button mat-button (click)="toggleCourseList()">
+                     {{showCourseList ? 'Cerrar Lista': 'Ver Lista de cursos'}}
+
+                    </button>
+                  </mat-action-row>
+
+                  <div *ngIf="showCourseList">
+                    <app-assing-curso (cursosSeleccionados)="actualizarCursosSeleccionados($event)">
+                    </app-assing-curso>
+                  </div>
+
+                  <mat-action-row>
+                    <button mat-button (click)="prevStep()">Anterior</button>
+                    <button mat-button (click)="nextStep()">Siguiente</button>
+                  </mat-action-row>
+                </mat-expansion-panel>
+
+
+                 <!-- Lista de Materias -->
+
+                <mat-expansion-panel [expanded]="step() === 2" (opened)="setStep(2)" hideToggle>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title> Materias </mat-panel-title>
+                    <mat-panel-description>
+                      Ver mas ...
+                      <mat-icon>date_range</mat-icon>
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+
+                     <!-- Materias asignados como Badges -->
+                     <div class="assigned-courses">
+                      <mat-label>Materias asignados actuales</mat-label>
+                      <div class="chip-container">
+                        <mat-chip *ngFor="let materia of editTeacherForm.get('subjects')?.value">
+                          {{ materia.nameSubject }}
+                        </mat-chip>
+                      </div>
+                    </div>
+
+
+                  <div>
+                    <app-assing-materias
+                    (materiasSeleccionados)="actualizarMateriasSeleccionadas($event)">
+                  </app-assing-materias>
+                  </div>
+
+
+                  <mat-action-row>
+                    <button mat-button (click)="prevStep()">Previous</button>
+                    <button mat-button (click)="nextStep()">End</button>
+                  </mat-action-row>
+                </mat-expansion-panel>
+
+
+              </form>
+            </mat-card-content>
+
+            <!-- Botones de acción -->
+            <mat-card-actions class="action-buttons">
+              <button mat-raised-button color="primary" type="submit" (click)="modificar(editTeacherForm)">Actualizar</button>
+              <button mat-button color="warn" type="button" (click)="cancelEdit()">Cancelar</button>
+            </mat-card-actions>
+          </div>
+
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

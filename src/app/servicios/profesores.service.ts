@@ -33,7 +33,7 @@ export class ProfesorService {
   }
 
   baseUrlById= "http://localhost:8087/teacher/";
-  getProfesorById(id:number): Observable<TeacherResponseDTO> {
+  getProfesorById(id:any): Observable<TeacherResponseDTO> {
     const token = localStorage.getItem('authToken');  // Recupera el token almacenado
 
     // Configurar el encabezado con el token

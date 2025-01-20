@@ -8,6 +8,7 @@ import { NotasComponent } from './paginas/notas/notas.component';
 import { ErrorComponent } from './paginas/error/error.component';
 import { LoginComponent } from './paginas/login/login.component';
 import { RoleGuard } from './guards/auth.guard';
+import { EditPrefesorComponent } from './paginas/profesores/edit-prefesor/edit-prefesor.component';
 
 export const routes: Routes = [
 
@@ -26,6 +27,14 @@ export const routes: Routes = [
     canActivate: [RoleGuard],
     data: { roles: ['ADMIN', 'TEACHER', 'DEVELOPER','INVITED'] } // Permitir a ADMIN, TEACHER, DEVELOPER
   },
+  {
+    path: 'editar-profesor/:id',
+    component: EditPrefesorComponent,
+    canActivate: [RoleGuard],
+    data: { roles: ['ADMIN', 'TEACHER', 'DEVELOPER', 'INVITED'] } // Permitir a ADMIN, TEACHER, DEVELOPER
+  },
+
+
   {
     path: "estudiante",
     component: EstudianteComponent,

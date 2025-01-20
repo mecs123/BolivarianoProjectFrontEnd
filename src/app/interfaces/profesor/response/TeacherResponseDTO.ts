@@ -13,6 +13,6 @@ export interface TeacherResponseDTO {
   nameTeacher: string;
   codTeacher: string;
   estado: boolean;
-  teacherSubjectRequestDto?: TeacherSubjectResponseDto[];
+  teacherSubjectResponseDto?: TeacherSubjectResponseDto[];
   teacherCourseResponseDto?: TeacherCourseResponseDto[];
 }

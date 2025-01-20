@@ -11,30 +11,28 @@ import { CommonModule } from '@angular/common';
 import { BannerComponent } from "../shared/banner/banner.component";
 import Swal from 'sweetalert2';
 import { TeacherResponseDTO } from '../../interfaces/profesor/response/TeacherResponseDTO';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-profesores',
   standalone: true, // Marca el componente como standalone si no tiene un módulo propio
   imports: [
-    MenuComponent,
-    HeaderComponent,
-    MatTableModule,
-    MatPaginatorModule,
-    MatIconModule,
-    MatDividerModule,
-    MatButtonModule,
-    CommonModule,
-    BannerComponent
+    MenuComponent,HeaderComponent, MatTableModule,MatPaginatorModule,
+    MatIconModule,MatDividerModule,MatButtonModule,CommonModule,BannerComponent
 ],
   templateUrl: './profesores.component.html',
    styleUrl: './profesores.component.css'
 })
 export class ProfesoresComponent implements OnInit{
 
+  constructor(private router: Router) {}
+
+
   profesores = [ /* your data */ ];
   profesoreById!: TeacherResponseDTO;
   dataSource = new MatTableDataSource(this.profesores);
-  displayedColumns: string[] = ['nameTeacher', 'codTeacher', 'estado','acciones'];
+  displayedColumns: string[] = ['id','nameTeacher', 'codTeacher', 'estado','acciones'];
 
   ngOnInit(): void {
     this.listAllTeacher()
@@ -62,10 +60,10 @@ export class ProfesoresComponent implements OnInit{
     this.profesoresService.getProfesorById(teacher.id).subscribe({
       next: (data: any) => {
         const profesor = data.body;
-        console.log(profesor)
+        console.log("llego del backend",profesor)
 
-        const subjects = profesor.teacherSubjectRequestDto
-          ? profesor.teacherSubjectRequestDto
+        const subjects = profesor.teacherSubjectResponseDto
+          ? profesor.teacherSubjectResponseDto
               .map((subject: any) => `<li>${subject.nameSubject}</li>`)
               .join('')
           : 'No asignaturas disponibles';
@@ -101,13 +99,14 @@ export class ProfesoresComponent implements OnInit{
     });
   }
 
-
-
   editarProfesor(teacher: any): void {
-    // Aquí puedes abrir un formulario de edición
-    console.log('Editar profesor:', teacher);
-    Swal.fire('Editar', `Editar al profesor: ${teacher.nameTeacher}`, 'info');
+    localStorage.setItem('teacher', JSON.stringify(teacher));
+    this.router.navigate(['/editar-profesor', teacher.id], {
+      state: { teacher } // Pasa los datos del profesor al componente de destino
+    });
+    console.log("Esto se va",teacher)
   }
+
 
   eliminarProfesor(teacher: any): void {
     Swal.fire({

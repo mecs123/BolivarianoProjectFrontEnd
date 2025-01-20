@@ -1,0 +1,31 @@
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+/* Asegura que los botones tengan suficiente espacio */
+.edit-teacher mat-card-content {
+  margin-bottom: 20px; /* espacio entre el formulario y los botones */
+}
+
+/* Asegura que los botones estén bien alineados y separados */
+.action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px; /* Espacio entre los botones */
+}
+
+/* Estilo para el acordeón */
+.accordion {
+  margin-bottom: 20px; /* espacio entre el acordeón y los botones */
+}
+
+/* Agregar margen al panel de expansión si es necesario */
+mat-expansion-panel {
+  margin-bottom: 15px; /* espacio debajo del panel de expansión */
+}
