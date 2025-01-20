@@ -1,0 +1,147 @@
+<mat-card *ngIf="!showForm" appearance="outlined" class="card-container">
+  <div class="card-header"></div>
+
+  <mat-stepper *ngIf="showStepper" orientation="vertical" linear="false" #stepper [formGroup]="profesorForm">
+
+    <!-- Paso 1: Ingreso de correo -->
+    <mat-step [stepControl]="profesorForm">
+      <form [formGroup]="profesorForm">
+        <ng-template matStepLabel>Ingresa correo del usuario</ng-template>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Correo</mat-label>
+          <input matInput placeholder="Correo" formControlName="email">
+        </mat-form-field>
+        <div class="button-group">
+          <button mat-raised-button color="primary" (click)="validateEmail()" matStepperNext>
+            <mat-icon>arrow_forward</mat-icon> Siguiente
+          </button>
+        </div>
+      </form>
+    </mat-step>
+
+    <!-- Paso 2: Ingreso del nombre del profesor -->
+    <mat-step [stepControl]="profesorForm">
+      <ng-template matStepLabel>Nombre del Profesor</ng-template>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Nombre del Profesor</mat-label>
+        <input
+         matInput placeholder="Ej. Juan Pérez"
+         formControlName="nombre">
+        <mat-hint>Puedes cambiar este nombre si lo deseas.</mat-hint>
+      </mat-form-field>
+      <div class="button-group">
+        <button mat-button matStepperPrevious
+        >
+          <mat-icon>arrow_back</mat-icon> Volver
+        </button>
+        <button mat-raised-button color="primary" matStepperNext>
+          <mat-icon>arrow_forward</mat-icon> Siguiente
+        </button>
+      </div>
+    </mat-step>
+
+    <!-- Paso 3: Ingreso de identificación -->
+    <mat-step [stepControl]="profesorForm">
+      <ng-template matStepLabel>Personaliza el ID de profesor </ng-template>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Identificación</mat-label>
+        <span matPrefix>
+          <mat-icon style="background-color: #1976d2; color: white; border-radius: 50%; padding: 4px; font-size: 16px;">
+            text_fields
+          </mat-icon>
+        </span>
+        <input
+         matInput placeholder="1056030JUAN"
+         formControlName="codTeacher"
+         >
+         <mat-hint>El ID se generara autoamaticamente con la la letra (T)</mat-hint>
+      </mat-form-field>
+      <div class="button-group">
+        <button mat-button matStepperPrevious>
+          <mat-icon>arrow_back</mat-icon> Volver
+        </button>
+        <button mat-raised-button color="primary" matStepperNext>
+          <mat-icon>arrow_forward</mat-icon> Siguiente
+        </button>
+      </div>
+    </mat-step>
+
+    <!-- Paso 4: Asignar cursos -->
+    <mat-step [stepControl]="profesorForm">
+      <ng-template matStepLabel>Selecciona los cursos</ng-template>
+      <app-assing-curso (cursosSeleccionados)="actualizarCursosSeleccionados($event)"></app-assing-curso>
+      <div class="button-group">
+        <button mat-button matStepperPrevious>
+          <mat-icon>arrow_back</mat-icon> Volver
+        </button>
+        <button mat-raised-button color="primary" matStepperNext>
+          <mat-icon>arrow_forward</mat-icon> Siguiente
+        </button>
+      </div>
+    </mat-step>
+
+    <!-- Paso 5: Seleccionar materias -->
+    <mat-step [stepControl]="profesorForm">
+      <ng-template matStepLabel>Selecciona las materias</ng-template>
+      <app-assing-materias (materiasSeleccionados)="actualizarMateriasSeleccionadas($event)"></app-assing-materias>
+      <div class="button-group">
+        <button mat-button matStepperPrevious>
+          <mat-icon>arrow_back</mat-icon> Volver
+        </button>
+        <button mat-raised-button color="primary" matStepperNext>
+          <mat-icon>arrow_forward</mat-icon> Confirmar datos
+        </button>
+      </div>
+    </mat-step>
+
+    <!-- Paso 6: Confirmar datos -->
+    <mat-step>
+      <ng-template matStepLabel>Revisar Información</ng-template>
+      <mat-card class="confirmation-card">
+        <h6>📋 Datos del Profesor</h6>
+        <mat-list>
+          <mat-list-item>
+
+            <p><strong>Nombre:</strong> {{ profesorForm.get('nombre')?.value }}</p>
+          </mat-list-item>
+          <mat-list-item>
+
+            <p><strong>Correo:</strong> {{ profesorForm.get('email')?.value }}</p>
+          </mat-list-item>
+          <mat-list-item>
+
+            <p class="warn-chip"><strong>Codigo del profesor:</strong>(T){{ profesorForm.get('codTeacher')?.value }}</p>
+          </mat-list-item>
+        </mat-list>
+
+        <h6>📚 Cursos Seleccionados</h6>
+        <mat-chip-set>
+          <mat-chip *ngFor="let curso of selectedCourses" class="warn-chip">
+            {{ curso }}
+          </mat-chip>
+        </mat-chip-set>
+
+        <h6>⚠️ Materias Seleccionadas</h6>
+        <mat-chip-set>
+          <mat-chip *ngFor="let materia of selectedSubject" class="warn-chip">
+            {{ materia }}
+          </mat-chip>
+        </mat-chip-set>
+
+      </mat-card>
+
+      <div class="button-group">
+        <button mat-raised-button color="primary" matStepperPrevious>
+          <mat-icon>arrow_back</mat-icon> Volver
+        </button>
+        <button mat-raised-button color="warn" (click)="stepper.reset()">
+          <mat-icon>refresh</mat-icon> Reiniciar
+        </button>
+        <button mat-raised-button color="accent" (click)="guardarProfesor()">
+          <mat-icon>save</mat-icon> Confirmar y Guardar
+        </button>
+      </div>
+    </mat-step>
+
+  </mat-stepper>
+</mat-card>

@@ -7,11 +7,12 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 
 import { loadingInterceptor } from './core/interceptors/loading.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes),
     provideHttpClient(),
     provideHttpClient(withInterceptors([loadingInterceptor])),
-    importProvidersFrom([BrowserAnimationsModule])
+    importProvidersFrom([BrowserAnimationsModule]), provideAnimationsAsync()
   ]
 };

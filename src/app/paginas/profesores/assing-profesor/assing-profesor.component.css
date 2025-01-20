@@ -1,0 +1,45 @@
+.card-container {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.confirmation-card {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  border-radius: 8px;
+}
+
+mat-chip {
+  margin-right: 5px;
+}
+
+::ng-deep mat-icon[matListIcon] {
+  font-size: 13px;  /* Ajusta el tamaño del ícono */
+  width: 13px;      /* Ancho consistente */
+  height: 13px;     /* Alto consistente */
+  line-height: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 13px; /* Espacio entre ícono y texto */
+}
+
+.warn-chip {
+  background-color: #ffebee !important; /* Fondo rojo claro */
+  color: #434e75 !important;           /* Texto rojo oscuro */
+  border: 1px solid #94a2b5;          /* Borde rojo */
+  font-weight: bold;
+}
+

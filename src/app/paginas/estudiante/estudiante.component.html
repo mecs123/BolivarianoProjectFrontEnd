@@ -1,1 +1,35 @@
-<p>estudiante works!</p>
+<div class="wrapper">
+  <app-menu></app-menu>
+  <div class="main">
+    <app-header></app-header>
+    <main class="content">
+      <div class="container-fluid p-0">
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a routerLink="/home">Home</a>
+            </li>
+
+            <li class="breadcrumb-item active" aria-current="page">Estudiantes</li>
+          </ol>
+        </nav>
+
+        <!-- Title -->
+        <h1 class="h3 mb-3">
+          <i class="fas fa-graduation-cap align-middle"></i> Estudiantes
+        </h1>
+
+        <!-- Table of Users -->
+        <div class="row">
+
+          <!-- src/app/pages/profesores/profesores.component.html -->
+          <app-grid [data]="estudiantes" titulo="Lista de Estudiantes"></app-grid>
+
+        </div>
+
+      </div>
+    </main>
+  </div>
+</div>
+

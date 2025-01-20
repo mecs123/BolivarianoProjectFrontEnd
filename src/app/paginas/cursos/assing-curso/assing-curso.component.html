@@ -1,0 +1,45 @@
+<span><strong>Cursos seleccionados:</strong></span>
+<mat-chip-set aria-label="Lista de cursos seleccionados">
+  <mat-chip *ngFor="let curso of seleccionados" class="curso-chip">
+    {{ curso }}
+    <button matChipRemove (click)="deseleccionarCurso(curso)" aria-label="Deseleccionar">
+      <mat-icon>cancel</mat-icon>
+    </button>
+  </mat-chip>
+</mat-chip-set>
+
+<br>
+
+<mat-chip-listbox class="curso-lista" aria-label="Lista de cursos">
+  <div class="columna">
+    <mat-chip-option
+      *ngFor="let curso of cursos.slice(0, cursos.length / 2)"
+      [selected]="seleccionados.includes(curso)"
+      (click)="toggleCurso(curso)">
+      {{ curso }}
+      <mat-icon *ngIf="seleccionados.includes(curso)" matChipRemove>check</mat-icon>
+    </mat-chip-option>
+  </div>
+
+  <div class="columna">
+    <mat-chip-option
+      *ngFor="let curso of cursos.slice(cursos.length / 2)"
+      [selected]="seleccionados.includes(curso)"
+      (click)="toggleCurso(curso)">
+      {{ curso }}
+      <mat-icon *ngIf="seleccionados.includes(curso)" matChipRemove>check</mat-icon>
+    </mat-chip-option>
+  </div>
+</mat-chip-listbox>
+
+<div>
+  <!-- Botón para seleccionar todos los cursos con ícono de agregar -->
+  <button mat-flat-button (click)="adicionarTodos()">
+    <mat-icon>add</mat-icon> Adicionar todos
+  </button>
+
+  <!-- Botón para limpiar la selección con ícono de limpiar -->
+  <button mat-raised-button (click)="limpiarSeleccion()">
+    <mat-icon>clear_all</mat-icon> Limpiar selección
+  </button>
+</div>

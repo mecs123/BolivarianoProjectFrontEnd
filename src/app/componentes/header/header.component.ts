@@ -6,14 +6,31 @@ import { AuthService } from '../../servicios/auth.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import Swal from 'sweetalert2'; // Asegúrate de importar SweetAlert2
-
+import { MatMenuTrigger } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import {MatListModule} from '@angular/material/list';
 @Component({
   selector: 'app-header',
+  imports:[
+    MatButtonModule,
+    MatIconModule,
+    MatToolbarModule,
+    MatMenuModule,
+    MatSidenavModule,
+    RouterLink,
+    MatListModule,
+    DatePipe
+  ],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
   styles: ``,
 })
 export class HeaderComponent implements OnInit {
+[x: string]: any;
 
   hora: any;
   fecha: any;
@@ -60,7 +77,6 @@ export class HeaderComponent implements OnInit {
   }
 
   getSesion(){
-    console.log("SI entra el cerrrar")
     this.authService.cerrarSesion();
   }
 
@@ -72,7 +88,6 @@ export class HeaderComponent implements OnInit {
 
   logout() {
 
-    console.log('popo')
     // Mostrar la alerta de confirmación
     Swal.fire({
       title: '¿Realmente desea cerrar su sesión?',

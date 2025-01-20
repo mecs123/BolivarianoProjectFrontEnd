@@ -1,0 +1,9 @@
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+button {
+  margin-left: auto; /* Esto también alinea el botón a la derecha */
+}

@@ -1,0 +1,17 @@
+::ng-deep .estado-activo {
+  color: green;
+}
+
+::ng-deep .estado-inactivo {
+  color: red;
+}
+mat-chip-set {
+  display: block;
+  max-width: 100%; /* El contenedor puede ocupar todo el ancho disponible */
+  overflow-x: auto; /* Permite desplazarse horizontalmente si los chips son demasiado grandes */
+}
+
+mat-chip {
+  white-space: nowrap; /* Evita que el texto del chip se divida */
+  padding: 0 8px; /* Asegura que haya un espaciado suficiente en cada chip */
+}

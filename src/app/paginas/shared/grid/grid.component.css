@@ -1,0 +1,23 @@
+/* src/app/components/data-grid/data-grid.component.css */
+.grid-container {
+  margin: 20px;
+}
+
+table {
+  width: 100%;
+}
+
+.activo {
+  color: green;
+  font-weight: bold;
+}
+
+.inactivo {
+  color: red;
+  font-weight: bold;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 15px;
+}

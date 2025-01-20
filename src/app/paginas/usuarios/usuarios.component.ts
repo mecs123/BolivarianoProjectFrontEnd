@@ -48,6 +48,13 @@ export class UsuariosComponent implements OnInit {
     ) {
 
     }
+
+    passwordVisible: boolean = false; // Variable para controlar la visibilidad
+
+  togglePasswordVisibility() {
+    this.passwordVisible = !this.passwordVisible; // Cambiar el estado de visibilidad
+  }
+
   ngOnInit(): void {
     this.loadUsers();
 
@@ -174,14 +181,12 @@ export class UsuariosComponent implements OnInit {
    this.loadingHeadModal('Editar');
    this.initializeForm(false);
    if (!usuario) {
-    console.error('No se ha proporcionado un usuario para editar');
     return;
    }else{
 
     this.usuariosServices.getUserById(usuario.id).subscribe({
       next: (response) => {
         const usuario = response;  // Accede al primer elemento del array
-        console.log("popo",usuario)
         this.rolesAsignados = usuario.roles;  // Esto es un array: ['INVITED']
         const titulo = this.modalTitle = 'Editar';
         this.cargarFormularioToShowInUpdate(usuario,titulo);
@@ -203,13 +208,12 @@ export class UsuariosComponent implements OnInit {
 
   cargarFormularioToShowInUpdate(usuario:AuthEditarUserRequest, titulo:string){
     if (!usuario || Object.keys(usuario).length === 0) {
-      console.error('Usuario no encontrado o inválido.');
       return;
     }
 
     this.modalTitle = titulo
     const formattedDate = usuario.dateOfBirth ? new Date(usuario.dateOfBirth).toISOString().split('T')[0] : '';
-      console.log(formattedDate)
+
     this.userForm.patchValue({
       id: usuario.id,  // Asegurarse de que el id se pase explícitamente
       username: usuario.username,
@@ -229,7 +233,6 @@ export class UsuariosComponent implements OnInit {
   editSendUser(_user: AuthEditarUserRequest): void {
     if(this.userForm.valid){
       const user = this.updateUserRequest(); // Transformar datos
-      console.log("Datos a actualizar", user)
       this.usuariosServices.editUser(user).subscribe({
         next: (response) => this.onEditarSuccess(response),
         error: (error) => this.onRegisterError(error),
@@ -246,7 +249,6 @@ export class UsuariosComponent implements OnInit {
     this.usuariosServices.getUserById(user.id).subscribe({
       next: (response) => {
         const usuario = response;  // Accede al primer elemento del array
-        console.log("popo",usuario)
         this.rolesAsignados = usuario.roles;  // Esto es un array: ['INVITED']
 
         this.cargarFormularioToShowInUpdate(usuario,titulo);
@@ -336,18 +338,32 @@ export class UsuariosComponent implements OnInit {
     let errorMessage = 'Ha ocurrido un error desconocido.';
 
     if (error.status === 500) {
-      errorMessage =
-        'Error interno del servidor. Es posible que el nombre de usuario ya exista. Intente con otro.';
+      errorMessage = 'Error interno del servidor. Intente nuevamente más tarde.';
     } else if (error.status === 400) {
       errorMessage = 'Datos inválidos. Por favor, revise los campos del formulario.';
+    } else if (error.status === 409) {
+      // Accedemos correctamente al error que viene del backend
+      const campoError = error.error.campo;
+      const mensajeError = error.error.mensaje;
+
+      if (campoError === 'correo') {
+        errorMessage = 'El correo ya está registrado. Por favor, usa otro.';
+      } else if (campoError === 'nombreUsuario') {
+        errorMessage = 'El nombre de usuario ya existe. Intenta con otro.';
+      } else {
+        errorMessage = mensajeError; // En caso de otros campos
+      }
     }
 
+    // Mostrar mensaje de error con SweetAlert2
     Swal.fire({
       icon: 'error',
       title: 'Error al crear el usuario',
       text: errorMessage,
     });
   }
+
+
 
   eliminar(id: number) {
     this.usuariosServices.delete(id).subscribe({

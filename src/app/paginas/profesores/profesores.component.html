@@ -1,1 +1,98 @@
-<p>profesores works!</p>
+<div class="wrapper">
+  <app-menu></app-menu>
+  <div class="main">
+    <app-header></app-header>
+    <main class="content">
+      <div class="container-fluid p-0">
+
+        <app-banner></app-banner>
+        <br>
+
+        <table  mat-table [dataSource]="dataSource">
+
+          <ng-container matColumnDef="nameTeacher">
+            <th mat-header-cell *matHeaderCellDef> Nombre del Profesor </th>
+            <td mat-cell *matCellDef="let teacher"> {{ teacher.nameTeacher }} </td>
+          </ng-container>
+
+          <!-- Loop through teacher's subjects -->
+          <ng-container matColumnDef="codTeacher">
+            <th mat-header-cell *matHeaderCellDef> Codigo del Profesor </th>
+            <td mat-cell *matCellDef="let teacher"> {{ teacher.codTeacher }} </td>
+          </ng-container>
+
+          <!-- Loop through teacher's courses -->
+          <ng-container matColumnDef="estado">
+            <th mat-header-cell *matHeaderCellDef> Estado </th>
+            <td mat-cell *matCellDef="let teacher">
+              <span
+                [ngStyle]="{
+                  'color': teacher.estado ? 'green' : 'red',
+                  'display': 'flex',
+                  'align-items': 'center'
+                }"
+              >
+                <mat-icon style="margin-right: 8px;">
+                  {{ teacher.estado ? 'check_circle' : 'cancel' }}
+                </mat-icon>
+                {{ teacher.estado ? 'Activo' : 'Inactivo' }}
+              </span>
+            </td>
+          </ng-container>
+
+
+
+          <!-- Columna de Acciones -->
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef> Acciones </th>
+            <td mat-cell *matCellDef="let teacher" class="action-buttons">
+
+              <!-- Botón Ver -->
+
+              <style>
+                .action-icon {
+
+                  color: #333f70; /* Azul gris oscuro por defecto */
+                  cursor: pointer;
+                  transition: color 0.3s; /* Transición suave al cambiar de color */
+                }
+
+                .action-icon:hover {
+                  color: rgb(219, 111, 48); /* Azul al pasar el mouse */
+                }
+              </style>
+
+              <span
+              class="action-icon"
+              (click)="verProfesor(teacher)"
+              >
+              <mat-icon>visibility</mat-icon>
+              </span>
+
+
+
+              <!-- Botón Editar -->
+              <a (click)="editarProfesor(teacher)" class="action-icon">
+                <mat-icon>edit</mat-icon>
+              </a>
+
+              <!-- Botón Eliminar -->
+              <a (click)="eliminarProfesor(teacher)" class="action-icon">
+                <mat-icon>delete</mat-icon>
+              </a>
+
+            </td>
+          </ng-container>
+
+
+
+
+          <!-- Footer and row definition -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+      </div>
+    </main>
+  </div>
+</div>

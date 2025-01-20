@@ -1,0 +1,27 @@
+<!-- Banner -->
+<mat-card appearance="outlined" style="box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+  <!-- Contenedor con flexbox para alinear título y botón en la misma línea -->
+  <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px;">
+    <!-- Título con margen a la izquierda para evitar que esté pegado a la margen -->
+    <h1 class="h3 mb-3" style="margin-left: 20px;">
+      Profesor
+    </h1>
+
+    <!-- Botón para mostrar/ocultar el Stepper alineado a la derecha -->
+    <button mat-raised-button (click)="toggleStepper()">
+      {{ showStepper ? 'Ocultar Formulario' : 'Nuevo Profesor' }}
+    </button>
+  </div>
+
+
+<!-- Solo mostrar el componente hijo si showStepper es true -->
+<app-assing-profesor
+  *ngIf="showStepper"
+  [showForm]="showForm"
+  [showStepper]="showStepper"
+  (closeForm)="toggleForm()">
+</app-assing-profesor>
+
+
+
+</mat-card>

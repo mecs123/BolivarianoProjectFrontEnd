@@ -128,13 +128,28 @@
             </div>
 
             <!-- Password (solo para Crear o Editar) -->
-            <div *ngIf="modalTitle === 'Crear' " class="col-md-6 mb-3">
-              <label for="password" class="form-label">Contraseña</label>
-              <input type="password" class="form-control" id="password" formControlName="password" placeholder="Ingrese la contraseña" autocomplete="current-password" />
-              <div *ngIf="userForm.get('password')?.invalid && userForm.get('password')?.touched" class="text-danger">
-                La contraseña no puede estar vacía.
-              </div>
-            </div>
+<div *ngIf="modalTitle === 'Crear'" class="col-md-6 mb-3">
+  <label for="password" class="form-label">Contraseña</label>
+  <div class="input-group">
+    <input
+      [type]="passwordVisible ? 'text' : 'password'"
+      class="form-control"
+      id="password"
+      formControlName="password"
+      placeholder="Ingrese la contraseña"
+      autocomplete="current-password" />
+    <button
+      class="btn btn-outline-secondary"
+      type="button"
+      (click)="togglePasswordVisibility()">
+      <i class="bi" [ngClass]="passwordVisible ? 'bi-eye-slash' : 'bi-eye'"></i> <!-- Ojo -->
+    </button>
+  </div>
+  <div *ngIf="userForm.get('password')?.invalid && userForm.get('password')?.touched" class="text-danger">
+    La contraseña no puede estar vacía.
+  </div>
+</div>
+
 
             <!-- Estado -->
             <div class="col-md-6 mb-3">
@@ -197,6 +212,11 @@
             <div class="col-md-6 mb-3">
               <label for="dateOfBirth" class="form-label">Fecha de Nacimiento</label>
               <input type="date" class="form-control" id="dateOfBirth" formControlName="dateOfBirth" autocomplete="bday" [readonly]="modalTitle === 'Detalles'" />
+
+              <div *ngIf="userForm.get('dateOfBirth')?.invalid && userForm.get('dateOfBirth')?.touched" class="text-danger">
+                Se requiere una fecha valida.
+              </div>
+
             </div>
 
             <!-- Phone -->

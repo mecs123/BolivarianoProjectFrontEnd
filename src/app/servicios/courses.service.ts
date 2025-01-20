@@ -1,33 +1,37 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, tap, throwError } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from '../../environments/environment.development';
 import { UserResponse } from '../interfaces/response/UserResponse';
 @Injectable({
   providedIn: 'root'
 })
-export class UsuariosService {
+export class CoursesService {
 
 
   constructor(private _http:HttpClient ) { }
 
-  getAllUsuarios(): Observable<any> {
-    return this._http.get(`${environment.api}/all`).pipe(
+  //baseUrl= "http://localhost:8080/teacher";
+  baseUrl= "http://localhost:8084/courses/all";
+  getAllCourses(): Observable<any> {
+    const token = localStorage.getItem('authToken');  // Recupera el token almacenado
+
+    // Configurar el encabezado con el token
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+
+    return this._http.get(`${this.baseUrl}`, { headers }).pipe(
       catchError((error) => {
-        console.error('Error al obtener usuarios:', error);
-        return throwError(() => new Error('Error al obtener usuarios'));
+        console.error('Error al obtener profesores:', error);
+        return throwError(() => new Error('Error al obtener profesores'));
       })
     );
   }
 
-  getAllRoels(): Observable<any> {
-    return this._http.get(`${environment.api}/roles`).pipe(
-      catchError((error) => {
-        console.error('Error al obtener roles:', error);
-        return throwError(() => new Error('Error al obtener usuarios'));
-      })
-    );
-  }
+
+
 
 
    // Método para registrar un nuevo usuario
@@ -64,10 +68,6 @@ getUserById(id:any): Observable<any> {
     })
   );
 }
-
-
-
-
 
 
 
