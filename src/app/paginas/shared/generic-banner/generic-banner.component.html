@@ -1,13 +1,9 @@
-<mat-card appearance="outlined" style="box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
-  <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px;">
-    <h1 class="h3 mb-3" style="margin-left: 20px;">{{ title }}</h1>
+<mat-card class="generic-banner">
 
-    <button mat-raised-button (click)="toggleComponent()">
-      {{ showComponent ? 'Ocultar Formulario' : buttonText }}
-    </button>
-  </div>
+  <strong>
 
-  <!-- Componente dinámico -->
-  <ng-container *ngIf="showComponent" [ngComponentOutlet]="component"></ng-container>
+    {{ title }}
+  </strong>
+
 </mat-card>
 

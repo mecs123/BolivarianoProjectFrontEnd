@@ -1,7 +1,7 @@
-<span><strong>Cursos seleccionados:</strong></span>
+<span><strong>Cursos nuevos a seleccionar:</strong></span>
 <mat-chip-set aria-label="Lista de cursos seleccionados">
   <mat-chip *ngFor="let curso of seleccionados" class="curso-chip">
-    {{ curso }}
+    {{ curso.nameCourse }}
     <button matChipRemove (click)="deseleccionarCurso(curso)" aria-label="Deseleccionar">
       <mat-icon>cancel</mat-icon>
     </button>
@@ -14,23 +14,25 @@
   <div class="columna">
     <mat-chip-option
       *ngFor="let curso of cursos.slice(0, cursos.length / 2)"
-      [selected]="seleccionados.includes(curso)"
+      [selected]="isCursoSeleccionado(curso)"
       (click)="toggleCurso(curso)">
-      {{ curso }}
-      <mat-icon *ngIf="seleccionados.includes(curso)" matChipRemove>check</mat-icon>
+      {{ curso.nameCourse }} <!-- Mostrar solo el nombre del curso -->
+      <mat-icon *ngIf="isCursoSeleccionado(curso)" matChipRemove>check</mat-icon>
     </mat-chip-option>
   </div>
 
   <div class="columna">
     <mat-chip-option
       *ngFor="let curso of cursos.slice(cursos.length / 2)"
-      [selected]="seleccionados.includes(curso)"
+      [selected]="isCursoSeleccionado(curso)"
       (click)="toggleCurso(curso)">
-      {{ curso }}
-      <mat-icon *ngIf="seleccionados.includes(curso)" matChipRemove>check</mat-icon>
+      {{ curso.nameCourse }} <!-- Mostrar solo el nombre del curso -->
+      <mat-icon *ngIf="isCursoSeleccionado(curso)" matChipRemove>check</mat-icon>
     </mat-chip-option>
   </div>
 </mat-chip-listbox>
+
+
 
 <div>
   <br>

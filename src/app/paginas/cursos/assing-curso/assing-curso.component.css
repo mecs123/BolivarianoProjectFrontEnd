@@ -12,7 +12,7 @@
 
 /* Efecto de cambio de color */
 .curso-chip:hover {
-  background-color: #e1cce5; /* Morado */
+  background-color: #b5bbc9;
   transform: scale(1.05); /* Aumentar el tamaño ligeramente */
 }
 
@@ -32,24 +32,14 @@
   gap: 10px;
 }
 .curso-chip {
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra suave */
   border-radius: 8px; /* Bordes redondeados */
   padding: 4px 8px;   /* Espaciado interno */
-  background-color: #41b7db; /* Color de fondo claro */
+  background-color: #ffffff;
   transition: transform 0.2s ease, box-shadow 0.2s ease; /* Transición suave */
 }
 
-.curso-chip:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra más fuerte al pasar el mouse */
-  transform: scale(1.05); /* Efecto de ampliación */
-}
-mat-chip-set {
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra suave */
-  border-radius: 8px; /* Bordes redondeados */
-  padding: 4px 8px;   /* Espaciado interno */
-  background-color: #bea4f2; /* Color de fondo claro */
-  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Transición suave */
-}
+
+
 .curso-chip {
   display: flex;
   justify-content: space-between;

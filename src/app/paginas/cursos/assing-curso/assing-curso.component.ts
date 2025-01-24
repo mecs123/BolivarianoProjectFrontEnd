@@ -28,7 +28,9 @@ export class AssingCursoComponent {
 
     }
 
-    @Output() cursosSeleccionados = new EventEmitter<string[]>();  // Emisor
+
+    @Output() cursosSeleccionados = new EventEmitter<{ idCourse: number, nameCourse: string }[]>();
+
 
 
     ngOnInit(): void {
@@ -41,19 +43,25 @@ export class AssingCursoComponent {
     }
 
     // Lista de cursos disponibles
-    cursos: string[] = [];
+    cursos: { idCourse: number, nameCourse: string }[] = [];
+
 
     // Lista de cursos seleccionados
-    seleccionados: string[] = [];
+    // Lista de cursos seleccionados con id y nombre
+    seleccionados: { idCourse: number, nameCourse: string }[] = [];
+
     nameCourse:string='';
+    idCourse:number=0;
 
 
     getAllCourses() {
       this._formDataCourseService.getAllCourseToSelectTeacher().subscribe({
         next: (response) => {
+         this.cursos = response.map((curso: any) => ({
+        idCourse: curso.id,
+        nameCourse: curso.nameCourse
 
-          this.nameCourse = response.nameCourse;
-          this.cursos = response.map((curso:any)=>curso.nameCourse);
+      }));
 
           this.cdr.detectChanges();
         },
@@ -65,23 +73,36 @@ export class AssingCursoComponent {
 
 
     // Función para alternar la selección de un curso
-    toggleCurso(curso: string): void {
-      if (this.seleccionados.includes(curso)) {
-        // Si ya está seleccionado, deseleccionamos
-        this.seleccionados = this.seleccionados.filter(item => item !== curso);
-        this.cursosSeleccionados.emit(this.seleccionados);
-      } else {
-        // Si no está seleccionado, lo añadimos
-        this.seleccionados.push(curso);
-      }
-      this.cursosSeleccionados.emit(this.seleccionados);
-      this.cdr.detectChanges();
+  // Función para alternar la selección de un curso
+  toggleCurso(curso: { idCourse: number, nameCourse: string }): void {
+    if (this.isCursoSeleccionado(curso)) {
+      // Si ya está seleccionado, deseleccionamos
+      this.seleccionados = this.seleccionados.filter(item => item.idCourse !== curso.idCourse);
+    } else {
+      // Si no está seleccionado, lo añadimos
+      this.seleccionados.push({ idCourse: curso.idCourse, nameCourse: curso.nameCourse });
     }
 
+    this.cursosSeleccionados.emit(this.seleccionados); // Emitir los cursos seleccionados
+    this.cdr.detectChanges();
+  }
+
+
+// Verificar si un curso está seleccionado
+isCursoSeleccionado(curso: { idCourse: number, nameCourse: string }): boolean {
+  return this.seleccionados.some(c => c.idCourse === curso.idCourse);
+}
+
+
+
+
+
     // Función para seleccionar todos los cursos
+
+
     adicionarTodos(): void {
 
-      this.seleccionados = [...this.cursos];
+      //this.seleccionados = [...this.cursos];
 
       this.cdr.detectChanges();
     }
@@ -92,9 +113,12 @@ export class AssingCursoComponent {
       }
 
         // Función para deseleccionar un curso
-    deseleccionarCurso(curso: string): void {
-      this.seleccionados = this.seleccionados.filter(item => item !== curso);
-    }
+  // Función para deseleccionar un curso
+deseleccionarCurso(curso: { idCourse: number, nameCourse: string }): void {
+  // Filtra los cursos seleccionados para eliminar el curso que coincide con el idCourse
+  this.seleccionados = this.seleccionados.filter(item => item.idCourse !== curso.idCourse);
+}
+
 
 
 }

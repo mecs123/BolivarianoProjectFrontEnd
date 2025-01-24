@@ -12,6 +12,6 @@ export interface UpdateTeacherRequest {
   codTeacher?: string;
   nameTeacher?: string;
   estado?: boolean;
-  teacherSubjectRequestDto?: TeacherSubject[];
-  teacherCourseRequestDto?: TeacherCourse[];
+  teacherSubjectRequestDto?: TeacherSubject;
+  teacherCourseRequestDto?: TeacherCourse;
 }

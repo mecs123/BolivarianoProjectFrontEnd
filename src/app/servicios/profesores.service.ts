@@ -74,35 +74,13 @@ export class ProfesorService {
 }
 
 
-
-
-
-
-   // Método para registrar un nuevo usuario
-
-   register(modelo: any): Observable<any> {
-    return this._http.post(`${environment.api}/sign-up`, modelo, {
-      headers: { 'Content-Type': 'application/json' },
-    });
-  }
-
-
-
-  // Método para editar un usuario (como ejemplo)
-  editUser(userRequest: any): Observable<UserResponse> {
-    const url = `http://localhost:8095/auth/edit/${userRequest.id}`;
-  return this._http.put<any>(url, userRequest, {
-    headers: { 'Content-Type': 'application/json' }
-  });
-
-}
-
 delete(id: number): Observable<any> {
-  const url = `http://localhost:8095/auth/delete/${id}`;
+  const url = `http://localhost:8087/teacher/${id}`;
   return this._http.delete<any>(url, {
     headers: { 'Content-Type': 'application/json' }
     });
 }
+
 
 
 

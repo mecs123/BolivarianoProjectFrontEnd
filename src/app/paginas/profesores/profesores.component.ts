@@ -26,7 +26,10 @@ import { Router } from '@angular/router';
 })
 export class ProfesoresComponent implements OnInit{
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private _profesoresService: ProfesorService
+  ) {}
 
 
   profesores = [ /* your data */ ];
@@ -39,10 +42,8 @@ export class ProfesoresComponent implements OnInit{
   }
 
 
-  profesoresService = inject(ProfesorService)
-
   listAllTeacher() {
-    this.profesoresService.getAllProfesores().subscribe({
+    this._profesoresService.getAllProfesores().subscribe({
       next: (data) => {
         this.profesores = data.body.content;
         this.dataSource = new MatTableDataSource(this.profesores);
@@ -57,7 +58,7 @@ export class ProfesoresComponent implements OnInit{
 
 
   verProfesor(teacher: any): void {
-    this.profesoresService.getProfesorById(teacher.id).subscribe({
+    this._profesoresService.getProfesorById(teacher.id).subscribe({
       next: (data: any) => {
         const profesor = data.body;
         console.log("llego del backend",profesor)
@@ -111,7 +112,7 @@ export class ProfesoresComponent implements OnInit{
   eliminarProfesor(teacher: any): void {
     Swal.fire({
       title: '¿Estás seguro?',
-      text: `Eliminar al profesor ${teacher.nameTeacher}`,
+      text: `Eliminar al profesor ${teacher.nameTeacher}, código ${teacher.codTeacher}`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Sí, eliminar',
@@ -119,7 +120,21 @@ export class ProfesoresComponent implements OnInit{
     }).then((result) => {
       if (result.isConfirmed) {
         // Lógica para eliminar al profesor
+
+        this._profesoresService.delete(teacher.id).subscribe({
+          next: (data:any) => {
+            console.log('Profesor eliminado:', data);
+            this.listAllTeacher();
+            Swal.fire('Eliminado', 'El profesor ha sido eliminado.', 'success');
+          },
+          error: (error:any) => {
+            console.error('Error al eliminar el profesor:', error);
+            Swal.fire('Error', 'No se pudo eliminar al profesor.', 'error');
+          }
+        });
+
         console.log('Profesor eliminado:', teacher);
+
         Swal.fire('Eliminado', 'El profesor ha sido eliminado.', 'success');
       }
     });

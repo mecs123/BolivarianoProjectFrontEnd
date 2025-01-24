@@ -46,16 +46,18 @@ export class AssingProfesorComponent {
   @Input() showForm: boolean = false;
   @Input() showStepper: boolean = false;
   @Output() closeForm = new EventEmitter<void>();
-  @Output() cursosSeleccionados = new EventEmitter<any[]>();
-  @Output() materiasSeleccionados = new EventEmitter<any[]>();
+  @Output() cursosSeleccionados = new EventEmitter<{idCourse: number, nameCourse: string}[]>();
+  @Output() materiasSeleccionados = new EventEmitter<{idSubject: number, nameSubject: string}[]>();
 
   profesorForm!: FormGroup;
   emailForm!: FormGroup;
   profesorRequest!: TeacherRequest;
   temporalName!:string;
 
-  selectedCourses: any[] = [];
-  selectedSubject: any[] = [];
+  selectedCourses:  {idCourse: number, nameCourse: string}[] = [];
+
+
+  selectedSubject: {idSubject: number, nameSubject: string}[] = [];
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -110,16 +112,16 @@ export class AssingProfesorComponent {
     }
   }
 
-  actualizarCursosSeleccionados(cursos: string[]): void {
+  actualizarCursosSeleccionados(cursos: {idCourse:number,nameCourse:string}[]): void {
     this.selectedCourses = cursos;
     this.cursosSeleccionados.emit(this.selectedCourses);
     this.cdr.detectChanges();
 
   }
 
-  actualizarMateriasSeleccionadas(subjects: string[]): void {
+  actualizarMateriasSeleccionadas(subjects: {idSubject: number, nameSubject: string}[]): void {
     this.selectedSubject = subjects;
-    this.materiasSeleccionados.emit(subjects);
+    this.materiasSeleccionados.emit(this.selectedSubject);
     console.log('Materias seleccionadas:', subjects);
     this.cdr.detectChanges();
   }
@@ -147,14 +149,14 @@ export class AssingProfesorComponent {
   }
 
   cargarFormularioToShowInUpdate(): TeacherRequest {
-    const courses = this.selectedCourses.map((courseName, index) => ({
+    const courses = this.selectedCourses.map((course, index) => ({
       idCourse: index + 1,
-      nameCourse: courseName
+      nameCourse: course.nameCourse
     }));
 
-    const subjects = this.selectedSubject.map((nameSubject, index) => ({
+    const subjects = this.selectedSubject.map((subject, index) => ({
       idSubject: index + 1,
-      nameSubject: nameSubject
+      nameSubject: subject.nameSubject
     }));
 
     const codTeacher = this.profesorForm.get('codTeacher')?.value;

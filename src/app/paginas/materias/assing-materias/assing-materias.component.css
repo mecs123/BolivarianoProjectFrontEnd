@@ -43,13 +43,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra más fuerte al pasar el mouse */
   transform: scale(1.05); /* Efecto de ampliación */
 }
-mat-chip-set {
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra suave */
-  border-radius: 8px; /* Bordes redondeados */
-  padding: 4px 8px;   /* Espaciado interno */
-  background-color: #9ee3ad; /* Color de fondo claro */
-  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Transición suave */
-}
+
 
 .materia-chip {
   display: flex;
@@ -77,5 +71,13 @@ mat-chip-set {
 
 button {
   margin-right: 8px;
+}
+.materia-seleccionada {
+  background-color: #9ee3ad; /* Color de fondo claro */
+  color: white;
+}
+/* Estilo cuando el chip se elimina (opcional) */
+.curso-chip button[matChipRemove] {
+  color: rgb(34, 89, 178); /* Asegúrate de que el ícono también sea blanco */
 }
 

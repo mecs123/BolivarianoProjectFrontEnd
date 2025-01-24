@@ -117,14 +117,14 @@
         <h6>📚 Cursos Seleccionados</h6>
         <mat-chip-set>
           <mat-chip *ngFor="let curso of selectedCourses" class="warn-chip">
-            {{ curso }}
+            {{ curso.nameCourse }}
           </mat-chip>
         </mat-chip-set>
 
         <h6>⚠️ Materias Seleccionadas</h6>
         <mat-chip-set>
           <mat-chip *ngFor="let materia of selectedSubject" class="warn-chip">
-            {{ materia }}
+            {{ materia.nameSubject }}
           </mat-chip>
         </mat-chip-set>
 

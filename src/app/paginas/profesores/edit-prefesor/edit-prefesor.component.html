@@ -6,7 +6,9 @@
       <div class="container-fluid p-0">
         <div class="edit-teacher">
           <mat-card-header>
-            <mat-card-title>Editar Profesor</mat-card-title>
+            <mat-card>
+              <app-generic-banner [title]="'Editar Profesor'"></app-generic-banner>
+            </mat-card>
           </mat-card-header>
 
           <div class="updateBoreder">
@@ -19,11 +21,9 @@
                     <mat-expansion-panel-header>
                       <mat-panel-title> Información personal </mat-panel-title>
                       <mat-panel-description>
-                        Ver más...
                         <mat-icon>account_circle</mat-icon>
                       </mat-panel-description>
                     </mat-expansion-panel-header>
-
                     <mat-chip-set aria-label="Información del profesor">
                       <mat-chip disabled>ID: {{ editTeacherForm.get('id')?.value }}</mat-chip>
                     </mat-chip-set>
@@ -55,26 +55,23 @@
                   <mat-expansion-panel-header>
                     <mat-panel-title> Cursos </mat-panel-title>
                     <mat-panel-description>
-                      Ver más...
-                      <mat-icon>school</mat-icon>
+                      <mat-icon>book</mat-icon> <!-- Ícono de libro para Cursos -->
                     </mat-panel-description>
                   </mat-expansion-panel-header>
 
                   <!-- Cursos asignados como Badges -->
                   <div class="assigned-courses">
-                    <mat-label>Cursos asignados actuales</mat-label>
+                    <mat-label><strong>Cursos asignados actuales</strong> </mat-label>
                     <div class="chip-container">
-                      <mat-chip *ngFor="let course of editTeacherForm.get('courses')?.value">
+                      <mat-chip class="materia-actual materia-actual-seleccionada" *ngFor="let course of editTeacherForm.get('courses')?.value">
                         {{ course.nameCourse }}
                       </mat-chip>
                     </div>
                   </div>
 
-                  <!-- Lista de cursos -->
                   <mat-action-row>
                     <button mat-button (click)="toggleCourseList()">
-                     {{showCourseList ? 'Cerrar Lista': 'Ver Lista de cursos'}}
-
+                      {{showCourseList ? 'Cerrar Lista' : 'Ver Lista de cursos'}}
                     </button>
                   </mat-action-row>
 
@@ -83,49 +80,49 @@
                     </app-assing-curso>
                   </div>
 
+
                   <mat-action-row>
                     <button mat-button (click)="prevStep()">Anterior</button>
                     <button mat-button (click)="nextStep()">Siguiente</button>
                   </mat-action-row>
                 </mat-expansion-panel>
 
-
-                 <!-- Lista de Materias -->
-
+                <!-- Lista de Materias -->
                 <mat-expansion-panel [expanded]="step() === 2" (opened)="setStep(2)" hideToggle>
                   <mat-expansion-panel-header>
                     <mat-panel-title> Materias </mat-panel-title>
                     <mat-panel-description>
-                      Ver mas ...
-                      <mat-icon>date_range</mat-icon>
+                      <mat-icon>library_books</mat-icon> <!-- Ícono de libros para Materias -->
                     </mat-panel-description>
                   </mat-expansion-panel-header>
 
-                     <!-- Materias asignados como Badges -->
-                     <div class="assigned-courses">
-                      <mat-label>Materias asignados actuales</mat-label>
-                      <div class="chip-container">
-                        <mat-chip *ngFor="let materia of editTeacherForm.get('subjects')?.value">
-                          {{ materia.nameSubject }}
-                        </mat-chip>
-                      </div>
+                  <!-- Materias asignadas como Badges -->
+                  <div class="assigned-courses">
+                    <mat-label><strong>Materias asignados actuales</strong> </mat-label>
+                    <div class="chip-container">
+                      <mat-chip class="materia-actual materia-actual-seleccionada" *ngFor="let materia of editTeacherForm.get('subjects')?.value">
+                        {{ materia.nameSubject }}
+                      </mat-chip>
                     </div>
-
-
-                  <div>
-                    <app-assing-materias
-                    (materiasSeleccionados)="actualizarMateriasSeleccionadas($event)">
-                  </app-assing-materias>
                   </div>
 
+                  <!-- Lista de materias -->
+                  <mat-action-row>
+                    <button mat-button (click)="toggleSubjectList()">
+                      {{showSubjectList ? 'Cerrar Lista' : 'Ver Lista de materias'}}
+                    </button>
+                  </mat-action-row>
+
+                  <div *ngIf="showSubjectList">
+                    <app-assing-materias (materiasSeleccionados)="actualizarMateriasSeleccionadas($event)">
+                    </app-assing-materias>
+                  </div>
 
                   <mat-action-row>
-                    <button mat-button (click)="prevStep()">Previous</button>
-                    <button mat-button (click)="nextStep()">End</button>
+                    <button mat-button (click)="prevStep()">Anterior</button>
+                    <button mat-button (click)="nextStep()">Finalizar</button>
                   </mat-action-row>
                 </mat-expansion-panel>
-
-
               </form>
             </mat-card-content>
 
@@ -135,7 +132,6 @@
               <button mat-button color="warn" type="button" (click)="cancelEdit()">Cancelar</button>
             </mat-card-actions>
           </div>
-
         </div>
       </div>
     </main>

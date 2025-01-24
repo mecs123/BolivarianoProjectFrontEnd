@@ -1,10 +1,12 @@
 
-<p><strong>Materias seleccionados:</strong></p>
+<p><strong>Materias nuevas seleccionar:</strong></p>
 
-<mat-chip-set aria-label="Lista de cursos seleccionados">
+
+
+<mat-chip-set aria-label="Lista de materias seleccionadas">
   <mat-chip *ngFor="let materia of seleccionados" class="curso-chip">
-    {{ materia }}
-    <button matChipRemove (click)="deseleccionarCurso(materia)" aria-label="Deseleccionar">
+    {{ materia.nameSubject }}
+    <button matChipRemove (click)="deseleccionarMateria(materia)" aria-label="Deseleccionar">
       <mat-icon>cancel</mat-icon>
     </button>
   </mat-chip>
@@ -17,9 +19,9 @@
   <div class="columna">
     <mat-chip-option
       *ngFor="let materia of materias.slice(0, materias.length / 2)"
-      [selected]="seleccionados.includes(materia)"
+      [selected]="isSubjectSeleccionado(materia)"
       (click)="toggleMateria(materia)">
-      {{ materia }}
+         {{ materia.nameSubject }}
       <mat-icon *ngIf="seleccionados.includes(materia)" matChipRemove>check</mat-icon>
     </mat-chip-option>
   </div>
@@ -27,12 +29,15 @@
   <div class="columna">
     <mat-chip-option
       *ngFor="let materia of materias.slice(materias.length / 2)"
-      [selected]="seleccionados.includes(materia)"
+      [selected]="isSubjectSeleccionado(materia)"
       (click)="toggleMateria(materia)">
-      {{ materia }}
-      <mat-icon *ngIf="seleccionados.includes(materia)" matChipRemove>check</mat-icon>
+          {{ materia.nameSubject }}
+
+      <mat-icon *ngIf="isSubjectSeleccionado(materia)" matChipRemove>check</mat-icon>
     </mat-chip-option>
   </div>
+
+
 </mat-chip-listbox>
 
 
